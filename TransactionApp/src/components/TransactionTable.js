@@ -18,8 +18,7 @@ const useStyles = makeStyles((theme) => ({
       maxHeight: 440,
     },
     header: {
-      backgroundColor: 'black',
-      color: 'white'
+      backgroundColor: theme.palette.primary,
     },
     row: {
       '&:nth-of-type(odd)': {
@@ -46,22 +45,22 @@ export default ({transactions}) => {
     }
 
     const columns = [
-        { id: 'id', label: 'ID', minWidth: 170 },
+        { id: 'id', label: 'ID', minWidth: 100 },
         { id: 'date', label: 'Date', minWidth: 100 },
         {
           id: 'narration',
           label: 'Narration',
-          minWidth: 170,
+          minWidth: 150,
         },
         {
           id: 'type',
           label: 'Type',
-          minWidth: 170,
+          minWidth: 150,
         },
         {
           id: 'amount',
           label: 'Amount',
-          minWidth: 170,
+          minWidth: 150,
           align: 'right',
           format: (value) => value.toFixed(2),
         },

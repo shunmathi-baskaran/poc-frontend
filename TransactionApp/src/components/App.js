@@ -13,4 +13,4 @@ export default  ({accountNumber}) => {
             <TransactionContainer accountNumber={accountNumber} />
         </StylesProvider>
     )
-} 
+}

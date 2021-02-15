@@ -1,10 +1,10 @@
 import React, {useRef, useEffect} from 'react';
-import { mount } from 'login/LoginApp';
+import { mountLogin } from 'login/LoginApp';
 
-export default function LoginApp({onLogin}) {
+export default function LoginApp({ onLoginSuccess }) {
     const ref = useRef(null);
     useEffect(() => {
-        mount(ref.current), onLogin
+        mountLogin(ref.current, onLoginSuccess )
     },[])
     return (
         <div ref={ref}></div>

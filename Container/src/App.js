@@ -1,47 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
+import { Route, Switch} from 'react-router-dom'
+import { withRouter } from 'react-router'
+import Header from './components/Header'
+import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
+import Login from 'login/LoginApp'
+import CustomerAccInfoApp from 'customerAccInfo/CustomerAccInfoApp'
 import TransactionApp from './components/TransactionApp'
-import CustomerAccInfoApp from './components/CustomerAccInfoApp'
-import LoginApp from './components/LoginApp'
-import { BrowserRouter, Route, Switch} from 'react-router-dom'
 
+const generateClassName = createGenerateClassName({
+    productionPrefix: 'co'
+});
 
-export default function App () {
+function App (props) {
     const [accountNumber, setAccountNumber] = useState(null);
+    const [isSignedIn, setIsSignedIn] = useState(false);
     const transactionDetails = (accountNumber) => {
         setAccountNumber(accountNumber);
     };
     const [customerInfo, setCustomerInfo] = useState({});
-    const onLogin = (customerDetails) => {
+    const onLoginSuccess = (customerDetails) => {
         setCustomerInfo(customerDetails);
+        setIsSignedIn(true);
+        props.history.push('/home')
+        console.log("login succeeed")
     }
     
+    const onSignOut = () => {
+        setIsSignedIn(false);
+    }
+
 const Home = () => {
     return (
-        <React.Fragment>
-            <CustomerAccInfoApp transactionDetails ={transactionDetails}  customerId= {1000001}
-                customerInfo =  {{
-                    customerId: 1000001,
-                    username: 'CustomerTwo',
-                    password: 'xyz',
-                    email: 'CustomerTwo@gmail.com',
-                    phoneNumber: '9787644674'
-                }} />
-            {accountNumber !== null 
-            ? <TransactionApp accountNumber={accountNumber}/> 
-            : <div>Please click on any account to view transaction details</div>
-            }
-        </React.Fragment>
+        <StylesProvider>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+                <CustomerAccInfoApp transactionDetails ={transactionDetails} 
+                    customerInfo =  {customerInfo}
+                />
+                <div>
+                    {accountNumber !== null 
+                    ? <TransactionApp accountNumber={accountNumber}/> 
+                    : <div style={{margin:'1em'}}>Please click on View Transactions on any account on <b>Account Information</b> tab to view transaction details</div>
+                    }
+                </div>
+            </div>
+        </StylesProvider>
     )
 }
 
     return (
         <div>
-            <BrowserRouter>
+            <Header onSignOut ={onSignOut} isSignedIn={isSignedIn} />
+            <Suspense fallback={<div>Loading...</div>}>
                 <Switch>
                     <Route exact path="/home" component={Home} />
-                    <Route path="/" render={() => <LoginApp onLogin={onLogin} />} />
+                    <Route path="/" render={() => <Login onLoginSuccess={onLoginSuccess} />} />
                 </Switch>
-            </BrowserRouter>
+            </Suspense>
         </div>
     )
 }
+
+
+export default withRouter(App)
