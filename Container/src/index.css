@@ -1,0 +1,9 @@
+.customeraccinfo-container{
+    width: 30%
+}
+
+@media(max-width: 700px){
+.customeraccinfo-container, .container{
+    width: 100%
+}
+}

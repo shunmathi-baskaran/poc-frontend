@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,6 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import InputField from "./InputFields";
+import { connect } from "react-redux"
+import { dispatchCustomerInfo } from "../store/actions/customerInfo"
+//import { loginContext } from "../bootstrap"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,10 +28,11 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#97144d"
   },
 }));
 
-export default ({ onLoginSuccess }) => {
+const Login = ({ dispatch, manageGlobalStore, onLoginSuccess, storeState }) => {
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -46,10 +50,20 @@ export default ({ onLoginSuccess }) => {
         password: event.target.value,
       }));
   };
+  
+  useEffect(() =>{
+   // debugger
+    console.log("useEffect executed. LoginApp storestate", storeState)
+    manageGlobalStore(storeState, "LOGIN_APP")
+  }, [storeState])
+
+  useEffect(() =>{
+    // debugger
+     console.log("loginApp mounted")
+   }, [])
 
   const handleSubmit = (event) => {
    event.preventDefault();
-    console.log(state.email, state.password)
     const query = `query {
     getCustomerInfo(email: "${state.email}", password: "${state.password}") {
         customerId
@@ -67,14 +81,19 @@ export default ({ onLoginSuccess }) => {
       .then((res) => res.json())
       .then((res) => {
         const customerDetails = res.data.getCustomerInfo;
-        onLoginSuccess(customerDetails);
-      });
+        //dispatching to login apps store.
+      //  onLoginSuccess(customerDetails); //home
+        dispatch(dispatchCustomerInfo(customerDetails))
+        //.then(() => manageGlobalStore(storeState, "LOGIN_APP"));
+        .then(() => onLoginSuccess());
+     //  console.log("props just after dispatch", props);
+      })
   };
 
   const classes = useStyles();
-  console.log(state);
   return (
     <Container component="main" maxWidth="xs">
+    {console.log("login rendering")}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -94,7 +113,7 @@ export default ({ onLoginSuccess }) => {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            color="secondary"
             className={classes.submit}
           >
             Sign In
@@ -104,3 +123,10 @@ export default ({ onLoginSuccess }) => {
     </Container>
   );
 };
+
+function mapStateToProps(state){
+  debugger
+  return { storeState : state}
+}
+
+export default connect(mapStateToProps)(Login);

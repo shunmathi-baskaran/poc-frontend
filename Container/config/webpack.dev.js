@@ -22,7 +22,8 @@ const devConfig = {
                 customerAccInfo: 'customerAccInfo@http://localhost:4042/remoteEntry.js',
                 login: 'login@http://localhost:4043/remoteEntry.js'
             },
-            shared: packageJSON.dependencies
+            //shared: packageJSON.dependencies
+            shared: ['react', 'react-dom', 'react-redux']
         }),
     ]
 }

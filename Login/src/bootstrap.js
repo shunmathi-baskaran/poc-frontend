@@ -1,7 +1,10 @@
 //import { createApp } from 'vue';
-import React from "react"
-import ReactDOM from 'react-dom'
-import Login from './components/Login';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+
+//const loginContext = React.createContext();
+
 //import 'bootstrap/dist/css/bootstrap.min.css'
 
 // // Mount function to start up the app
@@ -16,18 +19,30 @@ import Login from './components/Login';
 //   app.mount(el);
 // };
 
-const mount = (el, onLoginSuccess) =>{
-  ReactDOM.render(<Login onLoginSuccess={onLoginSuccess} />, el)
-}
+const mount = (el, onLoginSuccess, manageGlobalStore) => {
+  ReactDOM.render(
+    <App
+      onLoginSuccess={onLoginSuccess}
+      manageGlobalStore={manageGlobalStore}
+    />,
+    el
+  );
+};
 // If we are in development and in isolation,
 // call mount immediately
-if (process.env.NODE_ENV === 'development') {
-  const devRoot = document.querySelector('#_login-dev-root');
+if (process.env.NODE_ENV === "development") {
+  const devRoot = document.querySelector("#_login-dev-root");
 
   if (devRoot) {
-    mount(devRoot, (customerDetails) =>{
-      console.log(customerDetails)
-    });
+    mount(
+      devRoot,
+      (customerDetails) => {
+        console.log("onLoginSuccess", customerDetails);
+      },
+      (appState, appName) => {
+        console.log(appName, appState);
+      }
+    );
   }
 }
 

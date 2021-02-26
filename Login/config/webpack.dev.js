@@ -22,9 +22,10 @@ const devConfig = {
       name: 'login',
       filename: 'remoteEntry.js',
       exposes: {
-        './LoginApp': './src/components/Login',
+        './LoginApp': './src/App',
       },
-      shared: packageJson.dependencies,
+     // shared: packageJson.dependencies,
+     shared: ['react', 'react-dom', 'react-redux']
     })
   ],
 };

@@ -19,9 +19,10 @@ const devConfig = {
                 name: 'customerAccInfo',
                 filename: 'remoteEntry.js',
                 exposes: {
-                    './CustomerAccInfoApp': './src/App'
+                    './CustomerAccInfoApp': './src/Root'
                 },
-                shared: packageJson.dependencies
+                //shared: packageJson.dependencies
+                shared: ['react', 'react-dom', 'react-redux']
             })
         ]
     }

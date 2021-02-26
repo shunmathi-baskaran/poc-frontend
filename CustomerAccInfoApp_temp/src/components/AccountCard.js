@@ -3,43 +3,53 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: "100%",
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%'
   },
   table: {
     minWidth:100,
   },
   tableHeader:{
-      backgroundColor:"black"
+      backgroundColor:"#97144d"
   },
   headerText:{
     color: "white"
   },
+  tableCell:{
+    fontSize: "0.9em",
+    fontWeight: "bold"
+  },
   link: {
     textDecoration: 'underline',
     cursor: 'pointer'
+  },
+  vtBtn:{
+    backgroundColor: "#97144d"
   }
 }));
 
-export default function AccountCard({account, transactionDetails}) {
+export default function AccountCard({account, handleSelectedAccount}) {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
       <CardHeader
-       title={account.accountNumber}
+       title={`Account No. ${account.accountNumber}`}
+       style={{backgroundColor:"#ecf0f1", color:"#97144d"}}
         />
         <Divider />
       <CardContent>
@@ -49,17 +59,16 @@ export default function AccountCard({account, transactionDetails}) {
                 if(key !=="accountNumber")
                 return(
                 <TableRow key={key}>
-                    <TableCell align="center">{key}</TableCell>
-                    <TableCell align="center">{account[key]}</TableCell>
+                    <TableCell className={classes.tableCell} align="center">{key}</TableCell>
+                    <TableCell align="center" className={classes.tableCell}>{account[key]}</TableCell>
                 </TableRow>)
             })}
-                <TableRow key="viewTransmission">
-                    <TableCell align="center">Transmission Details</TableCell>
-                    <TableCell align="center" className={classes.link} onClick={() => transactionDetails(account.accountNumber)}>View Transactions</TableCell>
-                </TableRow>
             </TableBody>
         </Table>
       </CardContent>
+      <CardActions>
+      <Button className={classes.vtBtn} fullWidth variant="contained" color="secondary" onClick={() => handleSelectedAccount(account.accountNumber)}>View Transactions</Button>
+      </CardActions>
     </Card>
   );
 }

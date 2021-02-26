@@ -1,64 +1,113 @@
-import React, { useState, lazy, Suspense } from 'react';
-import { Route, Switch} from 'react-router-dom'
-import { withRouter } from 'react-router'
-import Header from './components/Header'
-import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
-import Login from 'login/LoginApp'
-import CustomerAccInfoApp from 'customerAccInfo/CustomerAccInfoApp'
-import TransactionApp from './components/TransactionApp'
+import React, { useState, Suspense } from "react";
+import { Route, Switch } from "react-router-dom";
+import { withRouter } from "react-router";
+import Header from "./components/Header";
+import {
+  StylesProvider,
+  createGenerateClassName,
+} from "@material-ui/core/styles";
+import Login from "login/LoginApp";
+import Home from "./components/Home";
+import { setLoginAppState, updatePhoneNo, setAccountInfoAppState } from "./store/actions/globalAction";
+import { connect } from "react-redux"
+import "./index.css"
 
 const generateClassName = createGenerateClassName({
-    productionPrefix: 'co'
+  seed: "co",
 });
 
-function App (props) {
-    const [accountNumber, setAccountNumber] = useState(null);
-    const [isSignedIn, setIsSignedIn] = useState(false);
-    const transactionDetails = (accountNumber) => {
-        setAccountNumber(accountNumber);
-    };
-    const [customerInfo, setCustomerInfo] = useState({});
-    const onLoginSuccess = (customerDetails) => {
-        setCustomerInfo(customerDetails);
-        setIsSignedIn(true);
-        props.history.push('/home')
-        console.log("login succeeed")
-    }
-    
-    const onSignOut = () => {
-        setIsSignedIn(false);
-    }
+function App(props) {
+  console.log("props container app", props)
+ // const [accountNumber, setAccountNumber] = useState(null);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const { loginAppState, accountInfoAppState, dispatch, history } = props
+  // const transactionDetails = (accountNumber) => {
+  //   setAccountNumber(accountNumber);
+  // };
+  // const [globalState, setGlobalState] = useState({
+  //   loginAppState: {},
+  //   accountInfoAppState: {},
+  // });
 
-const Home = () => {
-    return (
-        <StylesProvider>
-            <div style={{display: 'flex', flexDirection: 'row'}}>
-                <CustomerAccInfoApp transactionDetails ={transactionDetails} 
-                    customerInfo =  {customerInfo}
+  const manageGlobalStore = (appState, appName, action=null) => {
+    console.log("appName", appName, "appstate", appState, "action", action);
+
+    switch (appName) {
+      case "LOGIN_APP": 
+      if(action == null)
+      dispatch(setLoginAppState(appState)) //action()
+      else if(action === "UPDATE_PHONE_NO")
+      dispatch(updatePhoneNo(appState))
+        // setGlobalState((prevState) => ({
+        //   ...prevState,
+        //   loginAppState: appState,
+        // }));
+        break;
+      case "ACCOUNTINFO_APP": dispatch(setAccountInfoAppState(appState))
+        // setGlobalState((prevState) => ({
+        //   ...prevState,
+        //   accountInfoAppState: appState,
+        // }));
+        break;
+      default:
+        console.log("Never gonna happen");
+    }
+  };
+  const onLoginSuccess = () => {
+    setIsSignedIn(true);
+    console.log("login succeeed");
+    history.push("/home");
+  };
+
+  const onSignOut = () => {
+    setIsSignedIn(false);
+  };
+
+
+  return (
+    <StylesProvider generateClassName={generateClassName}>
+      <div>
+        {console.log("globalState inside container-loginAppState", loginAppState)}
+        {console.log("globalState inside container-accountInfoAppState", accountInfoAppState)}
+        <Header onSignOut={onSignOut} isSignedIn={isSignedIn} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route
+              exact
+              path="/home"
+              render={() => (
+                <Home
+                 // transactionDetails={transactionDetails}
+                  manageGlobalStore={manageGlobalStore}
+                  customerInfo={loginAppState}
+                  accountNumber={accountInfoAppState.selectedAccount}
                 />
-                <div>
-                    {accountNumber !== null 
-                    ? <TransactionApp accountNumber={accountNumber}/> 
-                    : <div style={{margin:'1em'}}>Please click on View Transactions on any account on <b>Account Information</b> tab to view transaction details</div>
-                    }
-                </div>
-            </div>
-        </StylesProvider>
-    )
+              )}
+            />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Login
+                  onLoginSuccess={onLoginSuccess}
+                  manageGlobalStore={manageGlobalStore}
+                />
+              )}
+            />
+          </Switch>
+        </Suspense>
+      </div>
+    </StylesProvider>
+  );
 }
 
-    return (
-        <div>
-            <Header onSignOut ={onSignOut} isSignedIn={isSignedIn} />
-            <Suspense fallback={<div>Loading...</div>}>
-                <Switch>
-                    <Route exact path="/home" component={Home} />
-                    <Route path="/" render={() => <Login onLoginSuccess={onLoginSuccess} />} />
-                </Switch>
-            </Suspense>
-        </div>
-    )
+function mapStateToProps({ loginAppState, accountInfoAppState }){
+   // debugger
+    return {
+        loginAppState,
+        accountInfoAppState
+    }
 }
+export default connect(mapStateToProps)(withRouter(App))
 
-
-export default withRouter(App)
+//export default withRouter(App);

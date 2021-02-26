@@ -14,7 +14,7 @@ const prodConfig = {
             name: 'customeraccinfo',
             filename: 'remoteEntry.js',
             exposes: {
-                './CustomerAccInfoApp': './src/bootstrap'
+                './CustomerAccInfoApp': './src/Root'
             },
             shared: packageJson.dependencies
         })

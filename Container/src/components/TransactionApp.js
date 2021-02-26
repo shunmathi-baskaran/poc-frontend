@@ -7,7 +7,7 @@ export default function TransactionApp({accountNumber}) {
         mount(ref.current, {
             accountNumber
         })
-    },[])
+    },[accountNumber])
     return (
         <div ref={ref}></div>
     )

@@ -22,7 +22,8 @@ const devConfig = {
             exposes: {
                 './TransactionApp': './src/bootstrap'
             },
-            shared: packageJSON.dependencies
+           // shared: packageJSON.dependencies
+           shared: ['react', 'react-dom', 'react-redux']
         }),
         new HtmlWebpackPlugin({
             template: './public/index.html'

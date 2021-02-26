@@ -3,7 +3,7 @@ import TransactionContainer from './TransactionContainer'
 import { StylesProvider, createGenerateClassName } from '@material-ui/core/styles';
 
 const generateClassName = createGenerateClassName({
-    productionPrefix: 'trans'
+    seed: 'trans'
 })
 
 
