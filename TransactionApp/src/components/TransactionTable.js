@@ -10,7 +10,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 
 const useStyles = makeStyles((theme) => ({
-  root1: {
+  root: {
     width: "100%",
   },
   container: {
@@ -47,22 +47,22 @@ export default ({ transactions }) => {
   };
 
   const columns = [
-    { id: "id", label: "ID", minWidth: 100 },
-    { id: "date", label: "Date", minWidth: 100 },
+    { id: "id", label: "ID", minWidth: '20%' },
+    { id: "date", label: "Date", minWidth: '15%' },
     {
       id: "narration",
       label: "Narration",
-      minWidth: 150,
+      minWidth: '15%',
     },
     {
       id: "type",
       label: "Type",
-      minWidth: 150,
+      minWidth: '20%',
     },
     {
       id: "amount",
       label: "Amount",
-      minWidth: 150,
+      minWidth: '20%',
       align: "right",
       format: (value) => value.toFixed(2),
     },
@@ -83,7 +83,7 @@ export default ({ transactions }) => {
   });
 
   return (
-    <Paper className={classes.root1}>
+    <Paper className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

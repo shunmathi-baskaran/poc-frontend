@@ -7,7 +7,7 @@ const TransactionAppLazy = lazy(() => import("./TransactionApp"));
 
 const Home = ({ manageGlobalStore, customerInfo, accountNumber}) => {
     return (
-        <div style={{ display: "flex" }}>
+        <div className="main-container">
           <div className="customeraccinfo-container container">
             <CustomerAccInfoAppLazy
               manageGlobalStore={manageGlobalStore}

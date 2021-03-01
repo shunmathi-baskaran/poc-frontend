@@ -52,13 +52,11 @@ const Login = ({ dispatch, manageGlobalStore, onLoginSuccess, storeState }) => {
   };
   
   useEffect(() =>{
-   // debugger
     console.log("useEffect executed. LoginApp storestate", storeState)
     manageGlobalStore(storeState, "LOGIN_APP")
   }, [storeState])
 
   useEffect(() =>{
-    // debugger
      console.log("loginApp mounted")
    }, [])
 
@@ -125,7 +123,6 @@ const Login = ({ dispatch, manageGlobalStore, onLoginSuccess, storeState }) => {
 };
 
 function mapStateToProps(state){
-  debugger
   return { storeState : state}
 }
 

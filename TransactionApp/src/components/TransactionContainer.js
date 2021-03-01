@@ -7,10 +7,14 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   heading: {
     textAlign: "center",
-     padding: "0.5em",
+    padding: "0.8em",
     backgroundColor:"#97144d",
     color:"white"
   },
+  msg: {
+    margin: '1em',
+    textAlign: 'center'
+  }
 });
 
 export default ({ accountNumber }) => {
@@ -43,7 +47,7 @@ export default ({ accountNumber }) => {
     {console.log("Transactions", transactions)}
         <Typography variant="h6" className={classes.heading}>Transaction Details - {accountNumber}</Typography>
       {transactions === null ? (
-        <Typography>No transactions</Typography>
+        <Typography className={classes.msg}>No transactions</Typography>
       ) : (
         <TransactionTable transactions={transactions} />
       )}

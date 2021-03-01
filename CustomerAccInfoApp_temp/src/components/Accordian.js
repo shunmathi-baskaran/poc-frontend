@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
   accordianSummary:{
     backgroundColor: "#97144d",
     borderBottom: "2px solid white"
+  }, 
+  expand_icon : {
+    color: "white"
   }
 }));
 
@@ -75,7 +78,7 @@ function Accordian(props) {
       <Accordion>
         <AccordionSummary
           className={classes.accordianSummary}
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon className={classes.expand_icon}/>}
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
@@ -100,7 +103,7 @@ function Accordian(props) {
       <Accordion>
         <AccordionSummary
           className={classes.accordianSummary}
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon className={classes.expand_icon}/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
@@ -115,7 +118,6 @@ function Accordian(props) {
 }
 
 function mapStateToProps(state) {
-  debugger
   return { accountInfoAppStore: state };
 }
 

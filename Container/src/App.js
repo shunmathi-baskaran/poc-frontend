@@ -102,7 +102,6 @@ function App(props) {
 }
 
 function mapStateToProps({ loginAppState, accountInfoAppState }){
-   // debugger
     return {
         loginAppState,
         accountInfoAppState
