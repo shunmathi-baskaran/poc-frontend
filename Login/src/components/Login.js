@@ -32,22 +32,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = ({ dispatch, manageGlobalStore, onLoginSuccess, storeState }) => {
+export const Login = ({ dispatch, manageGlobalStore, onLoginSuccess, storeState }) => {
   const [state, setState] = useState({
     email: "",
     password: "",
   });
 
   const onChange = (event) => {
-    if (event.target.name === "email")
+    const {name, value} = event.target;
+    if (name === "email")
       setState((prevState) => ({
         ...prevState,
-        email: event.target.value,
+        email: value,
       }));
     else
       setState((prevState) => ({
         ...prevState,
-        password: event.target.value,
+        password: value,
       }));
   };
   
