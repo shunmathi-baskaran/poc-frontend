@@ -1,7 +1,7 @@
-import React, { useEffect, lazy } from "react";
+import React, { lazy } from "react";
 
 const CustomerAccInfoAppLazy = lazy(() =>
-import("customerAccInfo/CustomerAccInfoApp")
+import("./CustomerAccInfoApp")
 );
 const TransactionAppLazy = lazy(() => import("./TransactionApp"));
 
