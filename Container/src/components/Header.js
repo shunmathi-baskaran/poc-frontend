@@ -19,7 +19,10 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1, 1.5),
       borderColor: '#97144d',
       color: '#fff',
-      backgroundColor: '#97144d'
+      backgroundColor: '#97144d',
+      '&:hover': {
+        color: '#97144d'
+      }
     },
     heading: {
       color: '#97144d',
