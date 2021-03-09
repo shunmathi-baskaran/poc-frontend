@@ -42,7 +42,7 @@ export default ({ transactions }) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(event.target.value);
     setPage(0);
   };
 
@@ -74,7 +74,7 @@ export default ({ transactions }) => {
 
   const rows = transactions.map((transaction) => {
     return createData(
-      transaction.id,
+      transaction._id,
       transaction.date,
       transaction.narration,
       transaction.type,

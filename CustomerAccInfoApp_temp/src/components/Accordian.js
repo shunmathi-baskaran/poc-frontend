@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Accordian(props) {
+export function Accordian(props) {
   const classes = useStyles();
   const { customerInfo, dispatch, accountInfoAppStore, manageGlobalStore } = props;
   // const [accounts, setAccounts] = useState([]);

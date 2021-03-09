@@ -51,7 +51,7 @@ export default ({isSignedIn, onSignOut }) => {
               color="inherit"
               noWrap
             >
-              App
+              Bank of Young India
             </Typography>
             {isSignedIn && (
                 <React.Fragment>

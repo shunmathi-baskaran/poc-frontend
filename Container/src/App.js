@@ -73,7 +73,6 @@ function App(props) {
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
             <Route
-              exact
               path="/home"
               render={() => (
                 <Home
