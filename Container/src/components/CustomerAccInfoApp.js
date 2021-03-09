@@ -1,12 +1,12 @@
 import React, {useRef, useEffect} from 'react';
 import { mount } from 'customerAccInfo/CustomerAccInfoApp';
 
-export default function CustomerAccInfoApp({transactionDetails, customerInfo}) {
+export default function CustomerAccInfoApp({manageGlobalStore, customerInfo}) {
     const ref = useRef(null);
     useEffect(() => {
         mount(ref.current, 
-            transactionDetails,
-            customerInfo
+            customerInfo,
+            manageGlobalStore
         )
     },[])
     return (

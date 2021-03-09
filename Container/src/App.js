@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { withRouter } from "react-router";
 import Header from "./components/Header";
@@ -73,7 +73,6 @@ function App(props) {
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>
             <Route
-              exact
               path="/home"
               render={() => (
                 <Home
